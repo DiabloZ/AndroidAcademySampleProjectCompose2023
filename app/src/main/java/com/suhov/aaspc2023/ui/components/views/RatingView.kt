@@ -1,12 +1,9 @@
-package com.suhov.aaspc2023.ui.components
+package com.suhov.aaspc2023.ui.components.views
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarHalf
 import androidx.compose.material.icons.filled.StarOutline
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

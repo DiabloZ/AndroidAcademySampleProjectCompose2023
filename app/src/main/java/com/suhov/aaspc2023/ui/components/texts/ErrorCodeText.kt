@@ -9,6 +9,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import com.suhov.aaspc2023.ui.components.previews.ElementPreview
 
 @ElementPreview
 @Composable

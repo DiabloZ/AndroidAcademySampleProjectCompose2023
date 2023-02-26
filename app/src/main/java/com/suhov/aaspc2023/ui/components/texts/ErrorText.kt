@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import com.suhov.aaspc2023.ui.components.previews.ElementPreview
 
 @ElementPreview
 @Composable

@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.ui.components
+package com.suhov.aaspc2023.ui.components.previews
 
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
