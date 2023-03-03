@@ -37,6 +37,7 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-materialIcons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeMaterial" }
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
