@@ -3,8 +3,10 @@ package com.suhov.aaspc2023.data.stores
 import com.suhov.aaspc2023.data.models.GitHubRepositoriesItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.koin.core.annotation.Single
 
-object SessionStore {
+@Single
+class SessionStore {
 
 
 	private val rawReposStateFlow: MutableStateFlow<List<GitHubRepositoriesItem>?> = MutableStateFlow(null)

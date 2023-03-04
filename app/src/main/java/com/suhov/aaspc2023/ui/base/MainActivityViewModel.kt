@@ -3,18 +3,21 @@ package com.suhov.aaspc2023.ui.base
 
 import androidx.lifecycle.ViewModel
 import com.suhov.aaspc2023.data.stores.SessionStore
-import com.suhov.aaspc2023.data.usecases.GitHubCasesImplTimeTemp
+import com.suhov.aaspc2023.data.usecases.GitHubUseCases
+import com.suhov.aaspc2023.data.utils.TimeConstants.IMMEDIATELY
+import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
-class MainActivityViewModel: ViewModel() {
-
-	private val gitHubUseCases = GitHubCasesImplTimeTemp
-	private val sessionStore = SessionStore
+@KoinViewModel
+class MainActivityViewModel(
+	sessionStore: SessionStore,
+	private val gitHubUseCases: GitHubUseCases
+): ViewModel() {
 
 	val gitHubRepoData = sessionStore.getReposStateFlow()
 
 	fun getRepos(){
-		gitHubUseCases.getRepos()
+		gitHubUseCases.getRepos(IMMEDIATELY)
 		Timber.e("MainActivityViewModel - getRepos")
 	}
 }
