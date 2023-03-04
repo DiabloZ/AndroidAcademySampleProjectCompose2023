@@ -7,18 +7,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.suhov.aaspc2023.ui.components.previews.PhonePreview
-import com.suhov.aaspc2023.ui.components.screens.errorloaddata.ErrorScreen
+import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreen
+import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenIntent
+import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenState
+import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorViewModel
 import com.suhov.aaspc2023.ui.theme.AndroidAcademySampleProjectCompose2023Theme
 import com.suhov.aaspc2023.ui.util.navigation.Screen
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -31,10 +38,14 @@ class MainActivity : ComponentActivity() {
 
 
 		lifecycleScope.launch {
-			repeatOnLifecycle(Lifecycle.State.STARTED){
-				viewModel.getRepos()
+
+/*			viewModel.gitHubRepoData.collect { repos ->
+				Timber.e("MAIN ACTIVITY TEST - $repos")
+			}*/
+			repeatOnLifecycle(Lifecycle.State.CREATED){
 				viewModel.gitHubRepoData.collect { repos ->
-					Timber.e("MAIN ACTIVITY TEST - $repos")
+					//viewModel.getRepos()
+					//Timber.e("MAIN ACTIVITY TEST - $repos")
 				}
 			}
 		}
@@ -44,8 +55,6 @@ class MainActivity : ComponentActivity() {
 					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colorScheme.background
 				) {
-/*					val testViewModel: MainActivityViewModel = viewModel()
-					testViewModel.getRepos()*/
 					val navController = rememberNavController()
 					navController.addOnDestinationChangedListener{
 							controller,
@@ -58,24 +67,28 @@ class MainActivity : ComponentActivity() {
 						startDestination = Screen.ErrorScreen.route
 					){
 						composable(route = Screen.ErrorScreen.route){
+							val vm: ErrorViewModel = koinViewModel()
 							ErrorScreen(
-								onLinkClick = {
-									Timber.w("!!!!!!!!!! onLinkClick - $it")
+								state = vm.state.collectAsStateWithLifecycle(),
+								onLinkClick = { link ->
+									vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
 								},
 								onRefreshButtonClick = {
+									vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
 									navController.navigate(Screen.GithubReposScreen.route)
-									Timber.w("!!!!!!!!!! onClick - RefreshButton")
 								},
 								modifier = Modifier
 							)
 						}
 						composable(route = Screen.GithubReposScreen.route){
+							val vm: ErrorViewModel = koinViewModel()
 							ErrorScreen(
-								onLinkClick = {
-									Timber.w("!!!!!!!!!! GithubReposScreen onLinkClick - $it")
+								state = vm.state.collectAsStateWithLifecycle(),
+								onLinkClick = { link ->
+									vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
 								},
 								onRefreshButtonClick = {
-									Timber.w("!!!!!!!!!! GithubReposScreen onClick - RefreshButton")
+									vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
 								},
 								modifier = Modifier
 							)
@@ -93,6 +106,7 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
 	AndroidAcademySampleProjectCompose2023Theme {
 		ErrorScreen(
+			state = remember{mutableStateOf(ErrorScreenState.initializeState)},
 			onLinkClick = {},
 			onRefreshButtonClick = {},
 			modifier = Modifier

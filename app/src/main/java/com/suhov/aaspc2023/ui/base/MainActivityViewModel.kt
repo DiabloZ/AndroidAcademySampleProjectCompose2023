@@ -14,7 +14,7 @@ class MainActivityViewModel(
 	private val gitHubUseCases: GitHubUseCases
 ): ViewModel() {
 
-	val gitHubRepoData = sessionStore.getReposStateFlow()
+	val gitHubRepoData = sessionStore.reposStateFlow
 
 	fun getRepos(){
 		gitHubUseCases.getRepos(IMMEDIATELY)

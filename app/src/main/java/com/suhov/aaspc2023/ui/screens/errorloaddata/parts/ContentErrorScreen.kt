@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.ui.components.screens.errorloaddata.parts
+package com.suhov.aaspc2023.ui.screens.errorloaddata.parts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

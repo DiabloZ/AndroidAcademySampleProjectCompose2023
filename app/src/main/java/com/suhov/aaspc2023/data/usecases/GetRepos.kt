@@ -21,6 +21,7 @@ class GetRepos(
 	operator fun invoke(duration: Long = SECOND) {
 		getRepoJob?.cancel()
 		getRepoJob = dispatchers.ioScope.launch {
+			sessionStore.setLoading(true)
 			delay(duration)
 			val reposResult = apiServices.gitHubApi.getGitRepo()
 			when {
@@ -32,6 +33,7 @@ class GetRepos(
 
 				}
 			}
+			sessionStore.setLoading(false)
 		}
 	}
 
