@@ -1,6 +1,7 @@
 plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
+    id ("com.google.devtools.ksp")
 }
 
 android {
@@ -51,28 +52,35 @@ android {
             excludes.add ("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
+
+    applicationVariants.all {
+        kotlin.sourceSets {
+            getByName(name) {
+                kotlin.srcDir("build/generated/ksp/${name}/kotlin")
+            }
+        }
+    }
 }
 
 dependencies {
 
     implementation (libs.ktx.core)
     implementation (libs.ktx.runtime)
-    implementation (libs.ktx.viewmodel)
+
     implementation (libs.compose.activity)
     implementation (libs.compose.preview)
     implementation (libs.compose.material)
     implementation (libs.compose.material3)
     implementation (libs.compose.materialIcons)
     implementation (libs.compose.viewmodel)
+    implementation(libs.compose.navigation)
+
     debugImplementation (libs.compose.uiTooling)
 
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.coil)
 
     implementation(libs.timber)
-
-    /*implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)*/
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
@@ -81,9 +89,12 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation (libs.test.junit)
+    androidTestImplementation (libs.test.junit.ext)
+    androidTestImplementation (libs.test.espresso)
 
-    implementation("androidx.navigation:navigation-compose:2.6.0-alpha05")
+    implementation (libs.koin.android)
+    implementation (libs.koin.compose)
+    implementation (libs.koin.annotations)
+    ksp (libs.koin.compiler)
 }
