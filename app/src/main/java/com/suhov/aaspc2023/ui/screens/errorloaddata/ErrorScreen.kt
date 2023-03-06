@@ -56,7 +56,8 @@ fun ErrorScreen(
 			shape = 50.dp,
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(horizontal = 16.dp, vertical = 24.dp)
+				.padding(horizontal = 16.dp, vertical = 24.dp),
+			isVisibleState = value.isLoading
 		)
 	}
 }

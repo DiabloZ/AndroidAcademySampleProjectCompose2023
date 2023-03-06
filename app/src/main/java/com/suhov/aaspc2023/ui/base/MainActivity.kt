@@ -3,6 +3,7 @@ package com.suhov.aaspc2023.ui.base
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,9 +15,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.suhov.aaspc2023.R
 import com.suhov.aaspc2023.ui.components.previews.PhonePreview
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreen
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenIntent
@@ -74,24 +77,37 @@ class MainActivity : ComponentActivity() {
 									vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
 								},
 								onRefreshButtonClick = {
+									val navOption = NavOptions.Builder()
+										.setEnterAnim( R.anim.slide_in_left )
+										.setExitAnim( R.anim.slide_out_left )
+										.setPopEnterAnim( R.anim.slide_in_left )
+										.setPopExitAnim( R.anim.slide_out_left )
+										.build()
+
+
 									vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
-									navController.navigate(Screen.GithubReposScreen.route)
+									navController.navigate(
+										route = Screen.GithubReposScreen.route,
+									 	navOptions = navOption
+									)
 								},
 								modifier = Modifier
 							)
 						}
 						composable(route = Screen.GithubReposScreen.route){
 							val vm: ErrorViewModel = koinViewModel()
-							ErrorScreen(
-								state = vm.state.collectAsStateWithLifecycle(),
-								onLinkClick = { link ->
-									vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
-								},
-								onRefreshButtonClick = {
-									vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
-								},
-								modifier = Modifier
-							)
+								
+								ErrorScreen(
+									state = vm.state.collectAsStateWithLifecycle(),
+									onLinkClick = { link ->
+										vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
+									},
+									onRefreshButtonClick = {
+										vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
+									},
+									modifier = Modifier
+								)
+
 						}
 					}
 

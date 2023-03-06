@@ -1,13 +1,14 @@
 package com.suhov.aaspc2023.ui.components.buttons
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -35,6 +36,7 @@ fun RefreshButtonPreview(){
 	)
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun RefreshButton(
 	text: String,
@@ -48,7 +50,8 @@ fun RefreshButton(
 	spacerValue: Dp = 8.dp,
 	contentPadding:Dp = 16.dp,
 	contentColor: Color = Color.Yellow,
-	backgroundColor: Color = Color.Cyan
+	backgroundColor: Color = Color.Cyan,
+	isVisibleState: Boolean = true
 ){
 	Button(
 		onClick = onClick,
@@ -61,14 +64,31 @@ fun RefreshButton(
 		),
 	) {
 		LeftIcon(leftIconRes, leftIconDescription, spacerValue)
-		Text(
-			text = text,
-			style = MaterialTheme.typography.headlineSmall,
-			textAlign = TextAlign.Start,
-			fontWeight = FontWeight.Bold,
+		AnimatedContent(
+			targetState = text,
+			transitionSpec = {
+				slideInHorizontally { -it } + fadeIn() with slideOutHorizontally { it } + fadeOut() using
+						SizeTransform(clip = false)
+			},
 			modifier = Modifier.weight(1f)
-		)
-		RightIcon(rightIconRes, rightIconDescription, spacerValue)
+		) { text ->
+			Text(
+				text = text,
+				style = MaterialTheme.typography.headlineSmall,
+				textAlign = TextAlign.Start,
+				fontWeight = FontWeight.Bold,
+				modifier = Modifier.weight(1f)
+			)
+		}
+
+		AnimatedVisibility(
+			visible = isVisibleState,
+			enter = fadeIn() + scaleIn(),
+			exit = fadeOut() + scaleOut()
+		) {
+			RightIcon(rightIconRes, rightIconDescription, spacerValue)
+		}
+
 	}
 
 }
