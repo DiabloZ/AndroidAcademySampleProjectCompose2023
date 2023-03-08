@@ -1,14 +1,17 @@
 package com.suhov.aaspc2023.domain.usecases
 
+import com.suhov.aaspc2023.data.models.NetworkResult
 import com.suhov.aaspc2023.data.services.ApiServices
 import com.suhov.aaspc2023.data.stores.SessionStore
 import com.suhov.aaspc2023.data.utils.DispatchersProject
+import com.suhov.aaspc2023.data.utils.network.NetworkHandler
 import com.suhov.aaspc2023.data.utils.TimeConstants.SECOND
 import com.suhov.aaspc2023.ui.screens.core.LoadingSate
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Single
+import timber.log.Timber
 
 @Single
 class GetRepos(
@@ -24,21 +27,24 @@ class GetRepos(
 		getRepoJob = dispatchers.ioScope.launch {
 			sessionStore.setLoading(LoadingSate.Loading)
 			delay(duration)
-			delay(duration * 7)
-			val reposResult = apiServices.gitHubApi.getGitRepo()
-			when {
-				reposResult.isSuccessful -> {
-					val data = reposResult.body() ?: return@launch
-					sessionStore.setRepos(data)
-				}
-				!reposResult.isSuccessful -> {
-					val message = reposResult.errorBody().toString()
-					sessionStore.setLoading(LoadingSate.Error(message))
+
+			when (
+				val repoListCall = NetworkHandler.call { apiServices.gitHubApi.getGitRepo() }
+			){
+				is NetworkResult.Success -> sessionStore.setRepos(repoListCall.data)
+				is NetworkResult.Error -> {
+					errorInterceptor(repoListCall)
+					sessionStore.setLoading(LoadingSate.Error(repoListCall.error.exceptionMessage))
 				}
 			}
+
 			sessionStore.setLoading(LoadingSate.Finished)
 
 		}
+	}
+
+	val errorInterceptor:(NetworkResult.Error) -> Unit = { error ->
+		Timber.e("Error code - ${error.error.code}, message - ${error.error.exceptionMessage}")
 	}
 
 }
