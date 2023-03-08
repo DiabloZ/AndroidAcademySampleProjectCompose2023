@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.data.usecases
+package com.suhov.aaspc2023.domain.usecases
 
 import com.suhov.aaspc2023.data.services.ApiServices
 import com.suhov.aaspc2023.data.stores.SessionStore

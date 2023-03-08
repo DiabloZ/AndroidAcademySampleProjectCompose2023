@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.data.models
+package com.suhov.aaspc2023.domain.models
 
 import com.google.gson.annotations.SerializedName
 

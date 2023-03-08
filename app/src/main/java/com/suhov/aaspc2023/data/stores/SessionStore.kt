@@ -1,6 +1,6 @@
 package com.suhov.aaspc2023.data.stores
 
-import com.suhov.aaspc2023.data.models.GitHubRepositoriesItem
+import com.suhov.aaspc2023.domain.models.GitHubRepositoriesItem
 import com.suhov.aaspc2023.ui.screens.core.LoadingSate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

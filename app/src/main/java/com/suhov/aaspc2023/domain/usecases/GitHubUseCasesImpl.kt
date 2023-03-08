@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.data.usecases
+package com.suhov.aaspc2023.domain.usecases
 
 import org.koin.core.annotation.Single
 

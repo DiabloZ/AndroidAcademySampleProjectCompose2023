@@ -3,8 +3,7 @@ package com.suhov.aaspc2023.ui.screens.errorloaddata
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suhov.aaspc2023.data.stores.ErrorSessionStore
-import com.suhov.aaspc2023.data.usecases.GitHubUseCases
-import com.suhov.aaspc2023.data.utils.TimeConstants
+import com.suhov.aaspc2023.domain.usecases.GitHubUseCases
 import com.suhov.aaspc2023.ui.screens.core.LoadingSate
 import com.suhov.aaspc2023.ui.screens.core.isLoading
 import kotlinx.coroutines.flow.MutableStateFlow
