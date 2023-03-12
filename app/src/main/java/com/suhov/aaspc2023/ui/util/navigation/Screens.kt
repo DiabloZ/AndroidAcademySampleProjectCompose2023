@@ -4,6 +4,6 @@ sealed class Screen(val route: String){
 
 	object ErrorScreen: Screen("error_screen")
 
-	object GithubReposScreen: Screen("github_repos_screen")
+	object GithubUsersScreen: Screen("github_users_screen")
 	
 }

@@ -22,6 +22,8 @@ import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreen
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenIntent
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenState
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorViewModel
+import com.suhov.aaspc2023.ui.screens.gitrepolist.GithubUsersList
+import com.suhov.aaspc2023.ui.screens.gitrepolist.GithubUsersListViewModel
 import com.suhov.aaspc2023.ui.theme.AndroidAcademySampleProjectCompose2023Theme
 import com.suhov.aaspc2023.ui.util.navigation.Screen
 import kotlinx.coroutines.launch
@@ -77,26 +79,19 @@ class MainActivity : ComponentActivity() {
 
 									vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
 									navController.navigate(
-										route = Screen.GithubReposScreen.route,
+										route = Screen.GithubUsersScreen.route,
 									 	navOptions = navOption
 									)
 								},
 								modifier = Modifier
 							)
 						}
-						composable(route = Screen.GithubReposScreen.route){
-							val vm: ErrorViewModel = koinViewModel()
-								
-								ErrorScreen(
-									state = vm.state.collectAsStateWithLifecycle(),
-									onLinkClick = { link ->
-										vm.pushIntent(ErrorScreenIntent.clickOnLink(link))
-									},
-									onRefreshButtonClick = {
-										vm.pushIntent(ErrorScreenIntent.clickOnRefresh)
-									},
-									modifier = Modifier
-								)
+						composable(route = Screen.GithubUsersScreen.route){
+							val vm: GithubUsersListViewModel = koinViewModel()
+
+							GithubUsersList(
+								state = vm.state.collectAsStateWithLifecycle()
+							)
 
 						}
 					}
