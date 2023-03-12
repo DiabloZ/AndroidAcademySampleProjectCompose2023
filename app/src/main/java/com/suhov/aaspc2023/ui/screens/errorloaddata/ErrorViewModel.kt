@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suhov.aaspc2023.data.stores.ErrorSessionStore
 import com.suhov.aaspc2023.domain.usecases.GitHubUseCases
-import com.suhov.aaspc2023.ui.screens.core.LoadingSate
+import com.suhov.aaspc2023.ui.screens.core.LoadingState
 import com.suhov.aaspc2023.ui.screens.core.isLoading
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,14 +37,14 @@ class ErrorViewModel(
 		}
 	}
 
-	private fun createState(loadState: LoadingSate) {
+	private fun createState(loadState: LoadingState) {
 		val newState = state.value.copy(
 			isLoading = loadState.isLoading(),
 			textLoadButton = when(loadState){
-				is LoadingSate.Error -> "Caused an error, oops"
-				LoadingSate.Default -> "Click on me for start loading"
-				LoadingSate.Finished -> "We loaded and navigating you to the next screen"
-				LoadingSate.Loading -> "We are loading now"
+				is LoadingState.Error -> "Caused an error, oops"
+				LoadingState.Default -> "Click on me for start loading"
+				LoadingState.Finished -> "We loaded and navigating you to the next screen"
+				LoadingState.Loading -> "We are loading now"
 			}
 		)
 		setNewState(newState)

@@ -2,7 +2,7 @@ package com.suhov.aaspc2023.domain.models
 
 import com.google.gson.annotations.SerializedName
 
-data class GitHubRepositoriesItem(
+data class GitHubUserItem(
 	@SerializedName("tags_url") val tagsUrl: String? = null,
 	@SerializedName("private") val jsonMemberPrivate: Boolean? = null,
 	@SerializedName("contributors_url") val contributorsUrl: String? = null,

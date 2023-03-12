@@ -4,7 +4,7 @@ import com.suhov.aaspc2023.data.services.ApiServices
 import com.suhov.aaspc2023.data.stores.SessionStore
 import com.suhov.aaspc2023.data.utils.DispatchersProject
 import com.suhov.aaspc2023.data.utils.TimeConstants.SECOND
-import com.suhov.aaspc2023.ui.screens.core.LoadingSate
+import com.suhov.aaspc2023.ui.screens.core.LoadingState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,9 +22,8 @@ class GetRepos(
 	operator fun invoke(duration: Long = SECOND) {
 		getRepoJob?.cancel()
 		getRepoJob = dispatchers.ioScope.launch {
-			sessionStore.setLoading(LoadingSate.Loading)
+			sessionStore.setLoading(LoadingState.Loading)
 			delay(duration)
-			delay(duration * 7)
 			val reposResult = apiServices.gitHubApi.getGitRepo()
 			when {
 				reposResult.isSuccessful -> {
@@ -33,10 +32,10 @@ class GetRepos(
 				}
 				!reposResult.isSuccessful -> {
 					val message = reposResult.errorBody().toString()
-					sessionStore.setLoading(LoadingSate.Error(message))
+					sessionStore.setLoading(LoadingState.Error(message))
 				}
 			}
-			sessionStore.setLoading(LoadingSate.Finished)
+			sessionStore.setLoading(LoadingState.Finished)
 
 		}
 	}

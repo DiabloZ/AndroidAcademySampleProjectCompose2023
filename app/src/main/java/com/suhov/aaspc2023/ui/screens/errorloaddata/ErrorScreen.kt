@@ -19,10 +19,10 @@ import com.suhov.aaspc2023.ui.screens.errorloaddata.parts.ContentErrorScreen
 @Composable
 private fun ErrorScreenPreview(){
 	ErrorScreen(
-		modifier = Modifier,
 		state = remember{ mutableStateOf(ErrorScreenState.initializeState) },
 		onLinkClick = {},
 		onRefreshButtonClick = {},
+		modifier = Modifier,
 	)
 }
 

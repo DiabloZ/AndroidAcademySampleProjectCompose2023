@@ -1,4 +1,4 @@
-package com.suhov.aaspc2023.ui.components.views
+package com.suhov.aaspc2023.ui.components.listelements
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,25 +18,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.suhov.aaspc2023.R
+import com.suhov.aaspc2023.domain.models.GitHubOwner
+import com.suhov.aaspc2023.domain.models.GitHubUserItem
 import com.suhov.aaspc2023.ui.components.previews.ElementPreview
 import com.suhov.aaspc2023.ui.components.previews.PhonePreview
 
 @ElementPreview
 @PhonePreview
 @Composable
-fun PreviewItemGithubRepoList() {
-	ItemGithubRepoList (
-		link = "https://www.pngaaa.com/api-download/3018884",
-		title = "Test",
-		subTitle = "SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest ",
+fun PreviewItemGithubUser() {
+	ItemGithubUser (
+		gitHubUser = GitHubUserItem(
+			name = "TestName",
+			description = "SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest SubtitleTest ",
+			owner = GitHubOwner(avatarUrl = "some")
+		),
 	)
 }
 
 @Composable
-fun ItemGithubRepoList(
-	link: String,
-	title: String,
-	subTitle: String,
+fun ItemGithubUser(
+	gitHubUser: GitHubUserItem,
 	modifier: Modifier = Modifier,
 	alignment: Alignment = Alignment.Center
 ) {
@@ -45,7 +47,7 @@ fun ItemGithubRepoList(
 		modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
 	){
 		AsyncImage(
-			model = link,
+			model = gitHubUser.owner?.avatarUrl,
 			contentDescription = null,
 			alignment = alignment,
 			placeholder = painterResource(R.drawable.ic_sad_cat),
@@ -64,14 +66,14 @@ fun ItemGithubRepoList(
 			modifier = modifier.weight(1f).alignByBaseline()
 		) {
 			Text(
-				text = title,
+				text = gitHubUser.fullName ?: "",
 				style = MaterialTheme.typography.titleLarge.injectZeroFontPaddings(),
 				textAlign = TextAlign.Start,
 				fontWeight = FontWeight.Bold,
 				modifier = Modifier
 			)
 			Text(
-				text = subTitle,
+				text = gitHubUser.description ?: "",
 				style = MaterialTheme.typography.titleSmall.injectZeroFontPaddings(),
 				textAlign = TextAlign.Start,
 				fontWeight = FontWeight.Normal,
