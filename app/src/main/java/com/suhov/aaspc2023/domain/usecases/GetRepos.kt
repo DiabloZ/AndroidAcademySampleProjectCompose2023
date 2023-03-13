@@ -6,7 +6,7 @@ import com.suhov.aaspc2023.data.stores.SessionStore
 import com.suhov.aaspc2023.data.utils.DispatchersProject
 import com.suhov.aaspc2023.data.utils.network.NetworkHandler
 import com.suhov.aaspc2023.data.utils.TimeConstants.SECOND
-import com.suhov.aaspc2023.ui.screens.core.LoadingSate
+import com.suhov.aaspc2023.ui.screens.core.LoadingState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class GetRepos(
 	operator fun invoke(duration: Long = SECOND) {
 		getRepoJob?.cancel()
 		getRepoJob = dispatchers.ioScope.launch {
-			sessionStore.setLoading(LoadingSate.Loading)
+			sessionStore.setLoading(LoadingState.Loading)
 			delay(duration)
 
 			when (
@@ -34,11 +34,11 @@ class GetRepos(
 				is NetworkResult.Success -> sessionStore.setRepos(repoListCall.data)
 				is NetworkResult.Error -> {
 					errorInterceptor(repoListCall)
-					sessionStore.setLoading(LoadingSate.Error(repoListCall.error.exceptionMessage))
+					sessionStore.setLoading(LoadingState.Error(repoListCall.error.exceptionMessage))
 				}
 			}
 
-			sessionStore.setLoading(LoadingSate.Finished)
+			sessionStore.setLoading(LoadingState.Finished)
 
 		}
 	}
