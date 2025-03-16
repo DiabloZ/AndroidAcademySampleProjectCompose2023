@@ -2,11 +2,12 @@ plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
     id ("com.google.devtools.ksp")
+    id ("kotlin-kapt")
 }
 
 android {
     namespace = "com.suhov.aaspc2023"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.suhov.aaspc2023"
@@ -34,19 +35,24 @@ android {
         }
 
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+
     packagingOptions {
         resources {
             excludes.add ("/META-INF/{AL2.0,LGPL2.1}")
@@ -97,4 +103,10 @@ dependencies {
     implementation (libs.koin.compose)
     implementation (libs.koin.annotations)
     ksp (libs.koin.compiler)
+
+    //implementation(libs.dagger.android)
+    //implementation(libs.dagger.android.processor)
+    //implementation(libs.dagger.android.support)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }

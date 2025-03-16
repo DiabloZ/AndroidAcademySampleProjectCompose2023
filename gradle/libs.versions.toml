@@ -1,9 +1,9 @@
 [versions]
-targetSdk = "31"
-compileSdk = "33"
+targetSdk = "34"
+compileSdk = "34"
 minSdk = "24"
 
-agp = "7.3.0"
+agp = "8.0.0"
 hilt = "2.38.1"
 kotlin = "1.7.20"
 googleServices = "4.3.10"
@@ -13,7 +13,7 @@ composeTooling = "1.4.0-beta01" # https://developer.android.com/jetpack/androidx
 composeMaterial = "1.3.1"
 composeMaterial3 = "1.1.0-alpha07"
 composeCompiler = "1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-composeNavigation = "2.6.0-alpha06"
+composeNavigation = "2.7.1"
 
 glide = "4.6.1"
 gson = "2.8.7"
@@ -28,6 +28,9 @@ viewmodelKtx = "2.6.0-rc01"
 koinAndroidVersion = "3.3.3"
 koinCompose = "3.4.2"
 koinAnnotations = "1.1.1"
+
+daggerVersion = "2.45"
+daggerProcessorVersion = "2.10"
 
 junit = "4.13.2"
 junitExt = "1.1.5"
@@ -62,6 +65,12 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCompose" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
 koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
+
+dagger = { module = "com.google.dagger:dagger", version.ref = "daggerVersion" }
+dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "daggerVersion" }
+dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "daggerProcessorVersion" }
+dagger-android-support = { module = "com.google.dagger:dagger-android-support", version.ref = "daggerVersion" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerVersion" }
 
 test-junit = { module = "junit:junit", version.ref = "junit" }
 test-junit-ext = { module = "androidx.test.ext:junit", version.ref = "junitExt" }

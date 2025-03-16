@@ -3,6 +3,8 @@ package com.suhov.aaspc2023.ui.base
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,7 +18,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.suhov.aaspc2023.R
+import com.suhov.aaspc2023.base.App
 import com.suhov.aaspc2023.ui.components.previews.PhonePreview
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreen
 import com.suhov.aaspc2023.ui.screens.errorloaddata.ErrorScreenIntent
@@ -30,14 +32,18 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
+	@Inject
+	lateinit var someString: String
 
 	private val viewModel: MainActivityViewModel by viewModel()
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-
+		App.instance.appComponent.inject(this)
+		Timber.e("EEEEE !!! - $someString")
 
 		lifecycleScope.launch {
 			viewModel.gitHubRepoData.collect { repos ->
@@ -61,7 +67,8 @@ class MainActivity : ComponentActivity() {
 						navController = navController,
 						startDestination = Screen.ErrorScreen.route
 					){
-						composable(route = Screen.ErrorScreen.route){
+						composable(route = Screen.ErrorScreen.route, enterTransition = {slideInHorizontally()}, exitTransition = { slideOutHorizontally() })
+					{
 							val vm: ErrorViewModel = koinViewModel()
 							ErrorScreen(
 								state = vm.state.collectAsStateWithLifecycle(),
@@ -70,10 +77,10 @@ class MainActivity : ComponentActivity() {
 								},
 								onRefreshButtonClick = {
 									val navOption = NavOptions.Builder()
-										.setEnterAnim( R.anim.slide_in_left )
-										.setExitAnim( R.anim.slide_out_left )
-										.setPopEnterAnim( R.anim.slide_in_left )
-										.setPopExitAnim( R.anim.slide_out_left )
+										//.setEnterAnim( R.anim.slide_in_left )
+										//.setExitAnim( R.anim.slide_out_left )
+										//.setPopEnterAnim( R.anim.slide_in_left )
+										//.setPopExitAnim( R.anim.slide_out_left )
 										.build()
 
 
@@ -86,7 +93,7 @@ class MainActivity : ComponentActivity() {
 								modifier = Modifier
 							)
 						}
-						composable(route = Screen.GithubUsersScreen.route){
+						composable(route = Screen.GithubUsersScreen.route, enterTransition = {slideInHorizontally()}, exitTransition = { slideOutHorizontally() }){
 							val vm: GithubUsersListViewModel = koinViewModel()
 
 							GithubUsersList(
